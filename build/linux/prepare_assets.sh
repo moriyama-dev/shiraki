@@ -26,7 +26,7 @@ fi
 
 cd ..
 
-if [[ "${CI_BUILD}" == "no" ]]; then
+if [[ "${CI_BUILD}" == "no" && "${SHOULD_BUILD_SNAP}" != "no" && -f ./stores/snapcraft/build.sh ]]; then
   . ./stores/snapcraft/build.sh
 
   if [[ "${SKIP_ASSETS}" == "no" ]]; then

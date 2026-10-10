@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=@@NAME_LONG@@
-Comment=A lightweight, stable code editor.
-Comment[ja]=軽量で安定したコードエディタ
+Comment=A lightweight, quiet code editor built on Code - OSS.
+Comment[ja]=Code - OSS をもとにした、軽量で静かなコードエディタ
 GenericName=Text Editor
 GenericName[ar]=محرر نصوص
 Exec=@@EXEC@@ %F

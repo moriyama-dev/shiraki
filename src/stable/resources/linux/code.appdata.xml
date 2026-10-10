@@ -5,8 +5,8 @@
 	<project_license>@@LICENSE@@</project_license>
 	<name>@@NAME_LONG@@</name>
 	<url type="homepage">https://github.com/moriyama-dev/shiraki</url>
-	<summary>A lightweight, stable code editor.</summary>
+	<summary>Shiraki is a lightweight, quiet code editor built on Code - OSS.</summary>
 	<description>
-		<p>Shiraki is a lightweight, stable code editor built from the MIT-licensed Code - OSS sources, using the VSCodium build scripts.</p>
+		<p>Shiraki removes features you do not need and keeps only what helps you work with Claude. It is not affiliated with or endorsed by Microsoft or the VSCodium project.</p>
 	</description>
 </component>

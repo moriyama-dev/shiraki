@@ -279,6 +279,14 @@ if [[ "${OS_NAME}" == "linux" ]]; then
   sed -i 's|Visual Studio Code|Shiraki|g' resources/linux/debian/control.template
   sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://github.com/moriyama-dev/shiraki|' resources/linux/debian/control.template
   sed -i 's|https://code.visualstudio.com|https://github.com/moriyama-dev/shiraki|' resources/linux/debian/control.template
+  # replace the upstream description (it is the last field of the template)
+  sed -i '/^Description:/,$d' resources/linux/debian/control.template
+  cat >> resources/linux/debian/control.template <<'EOF'
+Description: Shiraki is a lightweight, quiet code editor built on Code - OSS.
+ Shiraki removes features you do not need and keeps only what helps you
+ work with Claude. It is not affiliated with or endorsed by Microsoft or
+ the VSCodium project.
+EOF
 
   # code.spec.template
   sed -i 's|Microsoft Corporation|VSCodium Team|' resources/linux/rpm/code.spec.template
