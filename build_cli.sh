@@ -17,7 +17,7 @@ export VSCODE_CLI_UPDATE_ENDPOINT="https://raw.githubusercontent.com/VSCodium/ve
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
   export VSCODE_CLI_DOWNLOAD_ENDPOINT="https://github.com/VSCodium/vscodium-insiders/releases"
 else
-  export VSCODE_CLI_DOWNLOAD_ENDPOINT="https://github.com/VSCodium/vscodium/releases"
+  export VSCODE_CLI_DOWNLOAD_ENDPOINT="https://github.com/moriyama-dev/shiraki/releases"
 fi
 
 TUNNEL_APPLICATION_NAME="$( node -p "require(\"../product.json\").tunnelApplicationName" )"

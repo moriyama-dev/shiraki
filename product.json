@@ -647,5 +647,17 @@
     "gruntfuggly.todo-tree": {
       "default": false
     }
-  }
+  },
+  "nameShort": "Shiraki",
+  "nameLong": "Shiraki",
+  "applicationName": "shiraki",
+  "dataFolderName": ".shiraki",
+  "urlProtocol": "shiraki",
+  "linuxIconName": "shiraki",
+  "serverApplicationName": "shiraki-server",
+  "serverDataFolderName": ".shiraki-server",
+  "tunnelApplicationName": "shiraki-tunnel",
+  "reportIssueUrl": "https://github.com/moriyama-dev/shiraki/issues/new",
+  "licenseUrl": "https://github.com/moriyama-dev/shiraki/blob/main/LICENSE",
+  "darwinBundleIdentifier": "dev.moriyama.shiraki"
 }

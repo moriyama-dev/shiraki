@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=@@NAME_LONG@@ - URL Handler
-Comment=Code Editing. Redefined.
+Comment=A lightweight, stable code editor.
+Comment[ja]=軽量で安定したコードエディタ
 GenericName=Text Editor
 Exec=@@EXEC@@ --open-url %U
 Icon=@@ICON@@
@@ -9,4 +10,4 @@ NoDisplay=true
 StartupNotify=true
 Categories=Utility;TextEditor;Development;IDE;
 MimeType=x-scheme-handler/@@URLPROTOCOL@@;
-Keywords=vscodium;codium;vscode;
+Keywords=shiraki;editor;code;

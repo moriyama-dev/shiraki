@@ -4,15 +4,9 @@
 	<metadata_license>@@LICENSE@@</metadata_license>
 	<project_license>@@LICENSE@@</project_license>
 	<name>@@NAME_LONG@@</name>
-	<url type="homepage">https://www.vscodium.com</url>
-	<summary>VSCodium. Code editing. Redefined.</summary>
+	<url type="homepage">https://github.com/moriyama-dev/shiraki</url>
+	<summary>A lightweight, stable code editor.</summary>
 	<description>
-		<p>VSCodium is a community-driven, freely-licensed binary distribution of Microsoft's editor VS Code.</p>
+		<p>Shiraki is a lightweight, stable code editor built from the MIT-licensed Code - OSS sources, using the VSCodium build scripts.</p>
 	</description>
-	<screenshots>
-		<screenshot type="default">
-			<image>https://www.vscodium.com/img/vscodium.png</image>
-			<caption>Editing C</caption>
-		</screenshot>
-	</screenshots>
 </component>

@@ -5,12 +5,13 @@
 # to run with Bash: "C:\Program Files\Git\bin\bash.exe" ./dev/build.sh
 ###
 
-export APP_NAME="VSCodium"
-export ASSETS_REPOSITORY="VSCodium/vscodium"
-export BINARY_NAME="codium"
+export APP_NAME="Shiraki"
+export ASSETS_REPOSITORY="moriyama-dev/shiraki"
+export BINARY_NAME="shiraki"
 export CI_BUILD="no"
-export GH_REPO_PATH="VSCodium/vscodium"
-export ORG_NAME="VSCodium"
+export DISABLE_UPDATE="yes"
+export GH_REPO_PATH="moriyama-dev/shiraki"
+export ORG_NAME="moriyama-dev"
 export SHOULD_BUILD="yes"
 export SKIP_ASSETS="yes"
 export SKIP_BUILD="no"
