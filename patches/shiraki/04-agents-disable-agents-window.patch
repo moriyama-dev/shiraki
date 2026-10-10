@@ -1,0 +1,16 @@
+--- a/src/vs/platform/windows/electron-main/windowsMainService.ts
++++ b/src/vs/platform/windows/electron-main/windowsMainService.ts
+@@ -295,6 +295,13 @@
+ 	async openAgentsWindow(openConfig: IOpenConfiguration, folderUri?: URI, sessionResource?: URI, source?: AgentsWindowOpenSource): Promise<ICodeWindow[]> {
+ 		this.logService.trace('windowsManager#openAgentsWindow');
+ 
++		// Shiraki: the Agents window is disabled, open a regular window instead
++		const agentsWindowDisabled = true;
++		if (agentsWindowDisabled) {
++			this.logService.info('windowsManager#openAgentsWindow: the Agents window is disabled, opening a regular window');
++			return this.open({ ...openConfig, cli: { ...openConfig.cli, agents: false } });
++		}
++
+ 		// Open in a new browser window with the agent sessions workspace
+ 		const windows = await this.open(await this.ensureAgentsWindow(openConfig));
+ 

@@ -1,0 +1,13 @@
+--- a/src/vs/code/electron-main/main.ts
++++ b/src/vs/code/electron-main/main.ts
+@@ -255,7 +255,9 @@
+ 		} else if (isLinux) {
+ 			fileManagedSettingsPath = MANAGED_SETTINGS_LINUX_FILE_PATH;
+ 		}
+-		if (fileManagedSettingsPath) {
++		// Shiraki: do not watch the GitHub Copilot managed settings file
++		const watchFileManagedSettings = false;
++		if (watchFileManagedSettings && fileManagedSettingsPath) {
+ 			const fileManagedSettingsService = disposables.add(new FileManagedSettingsService(URI.file(fileManagedSettingsPath), fileService, logService));
+ 			services.set(IFileManagedSettingsService, fileManagedSettingsService);
+ 		} else {

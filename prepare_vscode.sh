@@ -133,6 +133,54 @@ echo "${jsonTmp}" > product.json && unset jsonTmp
 jsonTmp=$( jq 'del(.trustedExtensionAuthAccess)' product.json )
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
+# Shiraki: bundle the Japanese language pack (Open VSX) as a built-in extension,
+# with the vscode-loc MIT license added to it
+SHIRAKI_LP_NAME="MS-CEINTL.vscode-language-pack-ja"
+SHIRAKI_LP_VERSION="1.131.0"
+SHIRAKI_LP_SHA256="fae5a90170d48121bd8fe246d7d8ecbdab5bf88f21a0d58c94a3cc3af8c0f601"
+SHIRAKI_LP_DIR=".build/shiraki"
+SHIRAKI_LP_ORIG="${SHIRAKI_LP_DIR}/${SHIRAKI_LP_NAME}-${SHIRAKI_LP_VERSION}.orig.vsix"
+SHIRAKI_LP_VSIX="${SHIRAKI_LP_DIR}/${SHIRAKI_LP_NAME}-${SHIRAKI_LP_VERSION}.vsix"
+
+shiraki_sha256() {
+  if command -v sha256sum &> /dev/null; then
+    sha256sum "$1" | cut -d' ' -f1
+  else
+    shasum -a 256 "$1" | cut -d' ' -f1
+  fi
+}
+
+mkdir -p "${SHIRAKI_LP_DIR}"
+curl -fsSL --retry 3 -o "${SHIRAKI_LP_ORIG}" "https://open-vsx.org/api/MS-CEINTL/vscode-language-pack-ja/${SHIRAKI_LP_VERSION}/file/${SHIRAKI_LP_NAME}-${SHIRAKI_LP_VERSION}.vsix"
+
+if [[ "$( shiraki_sha256 "${SHIRAKI_LP_ORIG}" )" != "${SHIRAKI_LP_SHA256}" ]]; then
+  echo "Checksum mismatch for ${SHIRAKI_LP_ORIG}" >&2
+  exit 1
+fi
+
+rm -f "${SHIRAKI_LP_VSIX}"
+python3 -I ../build/shiraki/add_file_to_vsix.py "${SHIRAKI_LP_ORIG}" "${SHIRAKI_LP_VSIX}" ../build/shiraki/vscode-loc-LICENSE.md extension/LICENSE.md
+
+jsonTmp=$( jq --arg name "${SHIRAKI_LP_NAME}" --arg version "${SHIRAKI_LP_VERSION}" --arg vsix "${SHIRAKI_LP_VSIX}" --arg sha256 "$( shiraki_sha256 "${SHIRAKI_LP_VSIX}" )" \
+  '.builtInExtensions += [{
+    "name": $name,
+    "version": $version,
+    "sha256": $sha256,
+    "repo": "https://github.com/microsoft/vscode-loc",
+    "vsix": $vsix,
+    "metadata": {
+      "id": "077515fe-1509-49c0-9dcc-5511b41682fc",
+      "publisherId": {
+        "publisherId": "0b0882c3-aee3-4d7c-b5f9-872f9be0a115",
+        "publisherName": "MS-CEINTL",
+        "displayName": "MS-CEINTL",
+        "flags": ""
+      },
+      "publisherDisplayName": "MS-CEINTL"
+    }
+  }]' product.json )
+echo "${jsonTmp}" > product.json && unset jsonTmp
+
 cat product.json
 # }}}
 

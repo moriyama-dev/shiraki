@@ -1,0 +1,68 @@
+--- a/src/vs/workbench/contrib/issue/browser/issueReporterOverlay.ts
++++ b/src/vs/workbench/contrib/issue/browser/issueReporterOverlay.ts
+@@ -2223,7 +2223,7 @@
+ 		const rows: [string, string | undefined][] = [
+ 			['Issue Category', this.getIssueTypeTitle(this.selectedIssueType ?? IssueType.Bug)],
+ 			['Target', this.getIssueSourceLabel()],
+-			['VS Code Version', modelData.versionInfo?.vscodeVersion ?? product.version],
++			['!!APP_NAME!! Version', modelData.versionInfo?.vscodeVersion ?? product.version],
+ 			['OS Version', modelData.versionInfo?.os ?? modelData.systemInfo?.os],
+ 		];
+ 
+@@ -2244,7 +2244,7 @@
+ 
+ 		if (modelData.versionInfo) {
+ 			rows.push(
+-				['VS Code Version', modelData.versionInfo.vscodeVersion],
++				['!!APP_NAME!! Version', modelData.versionInfo.vscodeVersion],
+ 				['OS Version', modelData.versionInfo.os],
+ 			);
+ 		}
+--- a/src/vs/workbench/contrib/browserView/electron-browser/features/browserEditorEmulationFeatures.ts
++++ b/src/vs/workbench/contrib/browserView/electron-browser/features/browserEditorEmulationFeatures.ts
+@@ -871,7 +871,7 @@
+ 		}
+ 		const quickInputService = accessor.get(IQuickInputService);
+ 		const value = await quickInputService.input({
+-			prompt: localize('browser.userAgent.prompt', "User agent string (leave empty for VS Code default)"),
++			prompt: localize('browser.userAgent.prompt.shiraki', "User agent string (leave empty for !!APP_NAME!! default)"),
+ 			value: support.userAgent ?? '',
+ 		});
+ 		if (value === undefined) {
+--- a/src/vs/platform/agentHost/common/agentHostStarter.config.contribution.ts
++++ b/src/vs/platform/agentHost/common/agentHostStarter.config.contribution.ts
+@@ -257,8 +257,8 @@
+ 				value: thirdPartyAgentEnabledValue,
+ 				localization: {
+ 					description: {
+-						key: 'chat.agentHost.claudeAgent.enabled.policy',
+-						value: nls.localize('chat.agentHost.claudeAgent.enabled.policy', "Enable Claude Agent sessions in VS Code. Start and resume agentic coding sessions powered by Anthropic Claude Agent SDK directly in the editor. Uses your existing Copilot subscription."),
++						key: 'chat.agentHost.claudeAgent.enabled.policy.shiraki',
++						value: nls.localize('chat.agentHost.claudeAgent.enabled.policy.shiraki', "Enable Claude Agent sessions in !!APP_NAME!!. Start and resume agentic coding sessions powered by Anthropic Claude Agent SDK directly in the editor. Uses your existing Copilot subscription."),
+ 					}
+ 				}
+ 			},
+@@ -291,8 +291,8 @@
+ 				value: thirdPartyAgentEnabledValue,
+ 				localization: {
+ 					description: {
+-						key: 'chat.agentHost.codexAgent.enabled.policy',
+-						value: nls.localize('chat.agentHost.codexAgent.enabled.policy', "Enable Codex Agent sessions in VS Code. Start and resume agentic coding sessions powered by OpenAI Codex. Usage can be routed through GitHub Copilot or authenticated directly with an OpenAI account."),
++						key: 'chat.agentHost.codexAgent.enabled.policy.shiraki',
++						value: nls.localize('chat.agentHost.codexAgent.enabled.policy.shiraki', "Enable Codex Agent sessions in !!APP_NAME!!. Start and resume agentic coding sessions powered by OpenAI Codex. Usage can be routed through GitHub Copilot or authenticated directly with an OpenAI account."),
+ 					}
+ 				}
+ 			},
+--- a/src/vs/platform/agentHost/common/agentHostEnablementService.ts
++++ b/src/vs/platform/agentHost/common/agentHostEnablementService.ts
+@@ -53,8 +53,8 @@
+ 				minimumVersion: '1.134',
+ 				localization: {
+ 					description: {
+-						key: 'chat.editor.preferCopilotHarness.policy',
+-						value: nls.localize('chat.editor.preferCopilotHarness.policy', "Configure whether VS Code uses the Agent Host Copilot SDK instead of the local harness for new editor chat sessions."),
++						key: 'chat.editor.preferCopilotHarness.policy.shiraki',
++						value: nls.localize('chat.editor.preferCopilotHarness.policy.shiraki', "Configure whether !!APP_NAME!! uses the Agent Host Copilot SDK instead of the local harness for new editor chat sessions."),
+ 					},
+ 				},
+ 			},

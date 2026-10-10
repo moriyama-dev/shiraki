@@ -1,4 +1,11 @@
 {
 	"displayName": "Shiraki Defaults",
-	"description": "Default settings for Shiraki."
+	"description": "Default settings and the getting started guide for Shiraki.",
+	"walkthrough.title": "Get started with Claude Code",
+	"walkthrough.description": "Shiraki uses Claude Code as its only AI assistant. Install it from Open VSX to get started.",
+	"walkthrough.install.title": "Install Claude Code",
+	"walkthrough.install.description": "Install the Claude Code extension from Open VSX.\n[Install Claude Code](command:workbench.extensions.installExtension?%22anthropic.claude-code%22)",
+	"walkthrough.open.title": "Open Claude Code",
+	"walkthrough.open.description": "Open Claude Code in a new editor tab and sign in.\n[Open Claude Code](command:claude-vscode.editor.open)",
+	"walkthrough.media.altText": "Shiraki"
 }

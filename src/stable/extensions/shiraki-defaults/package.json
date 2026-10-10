@@ -38,7 +38,40 @@
         "**/build": true,
         "**/.next": true
       }
-    }
+    },
+    "walkthroughs": [
+      {
+        "id": "shiraki.claudeCode",
+        "title": "%walkthrough.title%",
+        "description": "%walkthrough.description%",
+        "steps": [
+          {
+            "id": "shiraki.claudeCode.install",
+            "title": "%walkthrough.install.title%",
+            "description": "%walkthrough.install.description%",
+            "media": {
+              "image": "media/shiraki.svg",
+              "altText": "%walkthrough.media.altText%"
+            },
+            "completionEvents": [
+              "extensionInstalled:anthropic.claude-code"
+            ]
+          },
+          {
+            "id": "shiraki.claudeCode.open",
+            "title": "%walkthrough.open.title%",
+            "description": "%walkthrough.open.description%",
+            "media": {
+              "image": "media/shiraki.svg",
+              "altText": "%walkthrough.media.altText%"
+            },
+            "completionEvents": [
+              "onCommand:claude-vscode.editor.open"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "repository": {
     "type": "git",
