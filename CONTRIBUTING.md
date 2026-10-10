@@ -1,64 +1,63 @@
-# Contributing
+# Shiraki への貢献 / Contributing to Shiraki
 
-:+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
+## 日本語
 
-#### Table Of Contents
+### 行動規範
 
-- [Code of Conduct](#code-of-conduct)
-- [Use of AI](#use-of-ai)
-- [Reporting Bugs](#reporting-bugs)
-   - [Before Submitting an Issue](#before-submitting-an-issue)
-- [Making Changes](#making-changes)
-   - [Building VSCodium](#building-vscodium)
-   - [Creating Pull Request](#creating-pull-request)
-   - [Updating patches](#updating-patches)
-   - [Add a new patch](#add-a-new-patch)
+このプロジェクトに参加する人は、[行動規範](CODE_OF_CONDUCT.md)を守ってください。
 
-## Code of Conduct
+### 不具合の報告と要望
 
-This project and everyone participating in it is governed by the [VSCodium Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+[Issues](https://github.com/moriyama-dev/shiraki/issues) から、不具合報告または要望のテンプレートを選んで書いてください。同じ内容の Issue がすでにないか、先に確認してください。
 
-## Use of AI
+### 変更の方針
 
-We welcome use of AI tools to help draft discussions, issues, or code, but please follow these rules:
+Shiraki は VS Code 本体のソースをできるだけ書き換えない方針です。変更が必要なときは、次の順に検討してください。
 
-- Use AI tools responsibly and disclose their use.
-- Ensure all content passes a human review for authenticity and quality.
-- Be concise. Do not write verbose discussions, issues or PR.
+1. `product.json` や既定の設定（`src/stable/extensions/shiraki-defaults`）で対応する
+2. ビルド時に組み込み拡張機能を除外する
+3. それでも足りないときだけ、`patches/shiraki/` に最小限のパッチを追加する
 
-Discussions, issues or PR that consist solely of unvetted AI outputs may be closed at the maintainer's discretion.
+パッチを追加するときは、ファイル名に連番と内容を表す名前を付けてください（例: `08-ui-xxxx.patch`）。製品名は `!!APP_NAME!!` と書くと、ビルド時に置き換わります。
 
-## Reporting Bugs
+### ビルド
 
-### Before Submitting an Issue
+手順は [docs/howto-build.md](docs/howto-build.md) にあります。
 
-Before creating bug reports, please check existing issues and [the Troubleshooting page](https://github.com/VSCodium/vscodium/blob/master/docs/troubleshooting.md) as you might find out that you don't need to create one.
-When you are creating a bug report, please include as many details as possible. Fill out [the required template](https://github.com/VSCodium/vscodium/issues/new?&labels=bug&&template=bug_report.md), the information it asks for helps us resolve issues faster.
+### Pull Request
 
-## Making Changes
+- 変更は1つの目的に絞ってください。
+- `main` ブランチに向けて作成してください。
+- 何をなぜ変えたかを短く書き、関係する Issue があればリンクしてください。
+- AI ツールを使った場合はそのことを書き、内容を自分で確認してから出してください。
 
-If you want to make changes, please read [the Build page](./docs/howto-build.md).
+## English
 
-### Building VSCodium
+### Code of Conduct
 
-To build VSCodium, please follow the command found in the section [`Build Scripts`](./docs/howto-build.md#build-scripts).
+Everyone taking part in this project is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-### Creating Pull Request
+### Bugs and feature requests
 
-Before opening a Pull Request, make sure your changes are focused. Open the PR against the `insider` branch.
+Open an issue from [Issues](https://github.com/moriyama-dev/shiraki/issues) using the bug report or feature request template. Please check first that the same issue does not exist already.
 
-In the description, briefly explain what changed and why, and link any related issue. Disclose any AI assistance, and review the PR yourself to ensure the changes are accurate and ready for review.
+### How changes are made
 
-### Updating patches
+Shiraki tries to change the VS Code sources as little as possible. When a change is needed, consider these options in order:
 
-If you want to update the existing patches, please follow the section [`Patch Update Process - Semi-Automated`](./docs/howto-build.md#patch-update-process-semiauto).
+1. Use `product.json` or the default settings (`src/stable/extensions/shiraki-defaults`)
+2. Exclude built-in extensions at build time
+3. Only if that is not enough, add a minimal patch to `patches/shiraki/`
 
-### Add a new patch
+Name new patches with a sequence number and a short description (for example `08-ui-xxxx.patch`). Write the product name as `!!APP_NAME!!`; it is replaced at build time.
 
-- first, you need to build VSCodium
-- then use the command `./dev/patch.sh <your patch name>`, to initiate a new patch
-- when the script pauses at `Press any key when the conflict have been resolved...`, open `vscode` directory in **VSCodium**
-- run `npm run watch`
-- run `./script/code.sh`
-- make your changes
-- press any key to continue the script `patch.sh`
+### Building
+
+See [docs/howto-build.md](docs/howto-build.md).
+
+### Pull requests
+
+- Keep each change focused on one purpose.
+- Open the pull request against the `main` branch.
+- Explain briefly what changed and why, and link any related issue.
+- If you used AI tools, say so, and review the result yourself before submitting.

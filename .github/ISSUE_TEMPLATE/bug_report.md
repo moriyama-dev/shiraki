@@ -1,40 +1,42 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: 不具合報告 / Bug report
+about: Shiraki の不具合を報告する / Report a problem with Shiraki
 title: ''
 labels: bug
 assignees: ''
-
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+<!--
+報告の前に、同じ内容の Issue がないか確認してください。
+Before reporting, please check that the same issue has not been reported already.
+-->
 
-**Please confirm that this problem is VSCodium-specific**
-- [ ] This bug doesn't happen if I use Microsoft's Visual Studio Code. It only happens in VSCodium.
+### 起きたこと / What happened
 
-**Please confirm that the issue/resolution isn't already documented**
-- [ ] I checked [the Docs page](https://github.com/VSCodium/vscodium/blob/master/docs/index.md) and [the Troubleshooting page](https://github.com/VSCodium/vscodium/blob/master/docs/troubleshooting.md) and my issue is not mentioned there.
+<!-- 何が起きたかを書いてください。 / Describe what happened. -->
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+### 再現手順 / Steps to reproduce
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+1.
+2.
+3.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+### 期待した動作 / Expected behavior
 
-**Desktop (please complete the following information):**
-- OS: [e.g. Mac OS, Ubuntu 20.04, etc]
-- Architecture [e.g. x64, ia32, arm64]
-- Version [e.g. 1.33.0]
-- App Manager [e.g. Winget, Homebrew, Snap, AUR, RPM, Nix, ...]
-- Sandboxed [e.g. no, Flatpak, Snap]
+<!-- 本来どうなるべきかを書いてください。 / Describe what you expected to happen. -->
 
-**Additional context**
-Add any other context about the problem here.
+### 環境 / Environment
+
+- Shiraki のバージョン / Shiraki version (`shiraki --version`):
+- OS とバージョン / OS and version:
+- インストール方法 / Installation (.deb, self-built):
+
+### 補足 / Additional context
+
+<!--
+スクリーンショットやログがあれば貼ってください。
+拡張機能を無効にして起動しても起きるか（`shiraki --disable-extensions`）も教えてください。
+
+Attach screenshots or logs if you have them.
+Please also tell us whether it still happens with extensions disabled (`shiraki --disable-extensions`).
+-->

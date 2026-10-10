@@ -1,215 +1,135 @@
-<!-- order: 35 -->
+# Shiraki のビルド / Building Shiraki
 
-# How to build VSCodium
+## 日本語
 
-## Table of Contents
+現在ビルドを確認しているのは Linux x64 版だけです。
 
-- [Dependencies](#dependencies)
-   - [Linux](#dependencies-linux)
-   - [MacOS](#dependencies-macos)
-   - [Windows](#dependencies-windows)
-- [Build for Development](#build-dev)
-- [Build for CI/Downstream](#build-ci)
-- [Build Snap](#build-snap)
-- [Patch Update Process](#patch-update-process)
-   - [Semi-Automated](#patch-update-process-semiauto)
-   - [Manual](#patch-update-process-manual)
+### 必要なもの
 
-## <a id="dependencies"></a>Dependencies
-
-- node (check [.nvmrc](../.nvmrc) for version)
-- jq
-- git
-- python3 3.11
-- rustup
-
-### <a id="dependencies-linux"></a>Linux
-
-- gcc
-- g++
-- make
-- pkg-config
-- libx11-dev
-- libxkbfile-dev
-- libsecret-1-dev
-- libkrb5-dev
-- fakeroot
-- rpm
-- rpmbuild
-- dpkg
-- imagemagick (for AppImage)
-- snapcraft
-
-### <a id="dependencies-macos"></a>MacOS
-
-see [the common dependencies](#dependencies)
-
-### <a id="dependencies-windows"></a>Windows
-
-The build scripts are written in Bash, so on Windows you must run them inside **Git Bash** (bundled with [Git for Windows](https://gitforwindows.org/)) or **WSL2**.
-
-#### Required tools
-
-- **Git for Windows** — provides Git Bash, `sed`, and POSIX utilities used by the build scripts:
-
-   ```cmd
-   winget install --id Git.Git -e
-   ```
-
-- **Node.js** — exact version is specified in [`.nvmrc`](../.nvmrc). Use [nvm-windows](https://github.com/coreybutler/nvm-windows) to manage versions:
-
-   ```cmd
-   nvm install <version-from-.nvmrc>
-   nvm use <version-from-.nvmrc>
-   ```
-
-   Alternatively, download directly from [nodejs.org](https://nodejs.org/). During installation, enable **"Automatically install the necessary tools"** to get the C++ build tools (required for native Node addons).
-
-- **jq** — JSON processor used throughout the build scripts:
-
-   ```cmd
-   winget install --id jqlang.jq -e
-   ```
-
-- **7-Zip** — used to package `.zip` archives:
-
-   ```cmd
-   winget install --id 7zip.7zip -e
-   ```
-
-- **Python 3.11** — required by the VS Code build system:
-
-   ```cmd
-   winget install --id Python.Python.3.11 -e
-   ```
-
-   Ensure `python` / `python3` is on your `PATH` after installation.
-
-- **Rustup** — required to compile some native VS Code modules:
-
-   ```cmd
-   winget install --id Rustlang.Rustup -e
-   ```
-
-   Restart your shell afterwards so `cargo` and `rustc` are on your `PATH`.
-
-#### Optional tools
-
-- **WiX Toolset v3** _(only needed for `.msi` installer packaging, i.e., the `-p` flag)_:
-
-   Download from [wixtoolset.org](https://wixtoolset.org/releases/) and ensure `candle.exe` / `light.exe` are on your `PATH`.
-
-#### PATH verification
-
-After installing all tools, verify each is discoverable from Git Bash:
+Ubuntu 24.04 で確認しています。
 
 ```bash
-node --version    # should match .nvmrc
-npm --version
-jq --version
-python3 --version # should be 3.11.x
-cargo --version
-7z i 2>&1 | head -1
-git --version
+sudo apt-get install -y \
+  build-essential pkg-config \
+  libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev \
+  fakeroot dpkg git curl jq \
+  python3 python3-venv python3-pip
 ```
 
-If any command is not found, add its install directory to your `PATH` via **System Properties → Environment Variables → Path**.
+- Node.js: [.nvmrc](../.nvmrc) に書かれたバージョン。[nvm](https://github.com/nvm-sh/nvm) で入れると、`nvm install` だけで合わせられます。
+- Rust: [rustup](https://rustup.rs/) で入れてください。
+- 起動確認を画面のない環境で行う場合は `xvfb` も入れてください。
 
-## <a id="build-dev"></a>Build for Development
-
-A build helper script can be found at `dev/build.sh`.
-
-- Linux: `./dev/build.sh`
-- MacOS: `./dev/build.sh`
-- Windows (Git Bash — **recommended**): `"C:\Program Files\Git\bin\bash.exe" ./dev/build.sh`
-- Windows (PowerShell): `powershell -ExecutionPolicy ByPass -File .\dev\build.ps1`
-
-> **Note for Windows users**: Git Bash is the recommended shell because the build scripts rely on POSIX utilities (`sed`, `grep`, `find`, etc.) bundled with Git for Windows. If you use WSL2, follow the Linux dependencies section instead.
-
-### Insider
-
-The `insider` version can be built with `./dev/build.sh -i` on the `insider` branch.
-
-You can try the latest version with the command `./dev/build.sh -il` but the patches might not be up to date.
-
-### Flags
-
-The script `dev/build.sh` provides several flags:
-
-- `-i`: build the Insiders version
-- `-l`: build with latest version of Visual Studio Code
-- `-o`: skip the build step
-- `-p`: generate the packages/assets/installers
-- `-s`: do not retrieve the source code of Visual Studio Code, it won't delete the existing build
-
-## <a id="build-ci"></a>Build for CI/Downstream
-
-Here is the base script to build VSCodium:
+### 手順
 
 ```bash
-# Export necessary environment variables
-export SHOULD_BUILD="yes"
-export SHOULD_BUILD_REH="no"
-export CI_BUILD="no"
-export OS_NAME="linux"
-export VSCODE_ARCH="${vscode_arch}"
-export VSCODE_QUALITY="stable"
-export RELEASE_VERSION="${version}"
+git clone https://github.com/moriyama-dev/shiraki.git
+cd shiraki
 
-. get_repo.sh
-. build.sh
+# .deb を作る（rpm、tar、リモート用サーバー、snap は作らない）
+SHOULD_BUILD_RPM=no SHOULD_BUILD_TAR=no SHOULD_BUILD_REH=no \
+SHOULD_BUILD_REH_WEB=no SHOULD_BUILD_SNAP=no \
+./dev/build.sh -p
 ```
 
-To go further, you should look at how we build it:
+成果物は次の場所にできます。
 
-- Linux: https://github.com/VSCodium/vscodium/blob/master/.github/workflows/stable-linux.yml
-- macOS: https://github.com/VSCodium/vscodium/blob/master/.github/workflows/stable-macos.yml
-- Windows: https://github.com/VSCodium/vscodium/blob/master/.github/workflows/stable-windows.yml
+- `assets/shiraki_<バージョン>_amd64.deb` とチェックサム
+- `VSCode-linux-x64/`（ビルドしたアプリ。`VSCode-linux-x64/shiraki` で直接起動できます）
 
-The `./dev/build.sh` script is for development purpose and must be avoided for a packaging purpose.
+`./dev/build.sh` のおもなオプション:
 
-## <a id="build-snap"></a>Build Snap
+| オプション | 意味 |
+|---|---|
+| `-p` | .deb などのパッケージを作る |
+| `-s` | VS Code のソースを取り直さず、手元の `vscode/` を使う |
+| `-o` | ビルドを飛ばし、パッケージ作成だけを行う（`-s -o -p` で組み合わせる） |
 
+### 所要時間と資源の目安
+
+CPU 8 コア、メモリ 16GiB の Ubuntu 24.04（仮想マシン）で測った値です。
+
+| 項目 | 目安 |
+|---|---|
+| フルビルド（`-p` 付き） | 約 9 分 |
+| メモリの最大使用量 | 約 7.7GiB |
+| ディスク使用量 | 約 12GB |
+
+### Shiraki 独自の変更がある場所
+
+| 場所 | 内容 |
+|---|---|
+| `product.json` | 製品名、フォルダ名、URL など |
+| `src/stable/extensions/shiraki-defaults/` | 既定の設定と Claude Code の案内 |
+| `patches/shiraki/` | VS Code 本体への最小限のパッチ |
+| `build/shiraki/` | 日本語言語パックの同梱に使うスクリプトと除外リスト |
+| `prepare_vscode.sh` | 上記をビルドに組み込む処理 |
+
+パッチが VS Code の新しいバージョンに当たらなくなったときは、VSCodium と同じく `./dev/patch.sh <パッチ名>` で直せます。
+
+## English
+
+Only the Linux x64 build has been verified so far.
+
+### Requirements
+
+Tested on Ubuntu 24.04.
+
+```bash
+sudo apt-get install -y \
+  build-essential pkg-config \
+  libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev \
+  fakeroot dpkg git curl jq \
+  python3 python3-venv python3-pip
 ```
-# for the stable version
-cd ./stores/snapcraft/stable
 
-# for the insider version
-cd ./stores/snapcraft/insider
+- Node.js: the version in [.nvmrc](../.nvmrc). With [nvm](https://github.com/nvm-sh/nvm), `nvm install` picks it up.
+- Rust: install it with [rustup](https://rustup.rs/).
+- Install `xvfb` as well if you want to start the app on a machine without a display.
 
-# create the snap
-snapcraft --use-lxd
+### Steps
 
-# verify the snap
-review-tools.snap-review --allow-classic codium*.snap
+```bash
+git clone https://github.com/moriyama-dev/shiraki.git
+cd shiraki
+
+# Build the .deb (skip rpm, tar, the remote server and snap)
+SHOULD_BUILD_RPM=no SHOULD_BUILD_TAR=no SHOULD_BUILD_REH=no \
+SHOULD_BUILD_REH_WEB=no SHOULD_BUILD_SNAP=no \
+./dev/build.sh -p
 ```
 
-## <a id="patch-update-process"></a>Patch Update Process
+The results are:
 
-## <a id="patch-update-process-semiauto"></a>Semi-Automated
+- `assets/shiraki_<version>_amd64.deb` and its checksums
+- `VSCode-linux-x64/` (the built app; run `VSCode-linux-x64/shiraki` to start it directly)
 
-- run `./dev/build.sh`, if a patch is failing then,
-- run `./dev/update_patches.sh`
-- when the script pauses at `Press any key when the conflict have been resolved...`, open `vscode` directory in **VSCodium**
-- fix all the `*.rej` files
-- run `npm run watch`
-- run `./script/code.sh` until everything is ok
-- press any key to continue the script `update_patches.sh`
+Main options of `./dev/build.sh`:
 
-## <a id="patch-update-process-manual"></a>Manual
+| Option | Meaning |
+|---|---|
+| `-p` | Create packages such as the .deb |
+| `-s` | Reuse the local `vscode/` sources instead of fetching them again |
+| `-o` | Skip the build and only create packages (combine as `-s -o -p`) |
 
-- run `./dev/build.sh`, if a patch is failing then,
-- run `./dev/patch.sh <name>.patch` where `<name>.patch` is the failed patch
-- open `vscode` directory in a new **VSCodium**'s window
-- fix all the `*.rej` files
-- run `npm run watch`
-- run `./script/code.sh` until everything is ok
-- go back to the command line running `./dev/patch.sh`, press `enter` to validate the changes and it will update the patch
+### Time and resources
 
-### <a id="icons"></a>icons/build_icons.sh
+Measured on Ubuntu 24.04 (virtual machine) with 8 CPU cores and 16 GiB of memory.
 
-To run `icons/build_icons.sh`, you will need:
+| Item | Approximate value |
+|---|---|
+| Full build (with `-p`) | about 9 minutes |
+| Peak memory use | about 7.7 GiB |
+| Disk use | about 12 GB |
 
-- imagemagick
-- png2icns (`npm install png2icns -g`)
-- librsvg
+### Where the Shiraki changes live
+
+| Location | Contents |
+|---|---|
+| `product.json` | Product name, folder names, URLs |
+| `src/stable/extensions/shiraki-defaults/` | Default settings and the Claude Code guide |
+| `patches/shiraki/` | Minimal patches to the VS Code sources |
+| `build/shiraki/` | Script and keep list for bundling the Japanese language pack |
+| `prepare_vscode.sh` | Wires the above into the build |
+
+If a patch no longer applies to a new VS Code version, fix it with `./dev/patch.sh <patch name>`, as in VSCodium.
