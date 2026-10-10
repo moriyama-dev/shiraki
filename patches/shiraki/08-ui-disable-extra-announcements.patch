@@ -1,0 +1,11 @@
+--- a/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStarted.contribution.ts
++++ b/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStarted.contribution.ts
+@@ -317,7 +317,7 @@
+ 		'workbench.welcomePage.extraAnnouncements': {
+ 			scope: ConfigurationScope.MACHINE,
+ 			type: 'boolean',
+-			default: true,
++			default: false,
+ 			description: localize('workbench.welcomePage.extraAnnouncements', "When enabled, the get started page loads additional announcements from Shiraki's repository."),
+ 			tags: ['usesOnlineServices']
+ 		},

@@ -41,6 +41,7 @@ Removed languages are no longer highlighted inside Markdown code blocks either. 
 | Agents ウィンドウ（`--agents`） / Agents window (`--agents`) | 通常のウィンドウを開くように変更 / Opens a regular window instead (`patches/shiraki/04`) |
 | GitHub Copilot の管理設定ファイルの監視 / Watching the GitHub Copilot managed settings file | 監視しない / Not watched (`patches/shiraki/05`) |
 | `~/.cache/Microsoft/DeveloperTools/deviceid` の作成 / Creating that device id file | 作らない / Not created (`patches/shiraki/07`) |
+| Welcome のお知らせの取得（raw.githubusercontent.com への通信） / Fetching Welcome page announcements (requests to raw.githubusercontent.com) | `workbench.welcomePage.extraAnnouncements` の既定を無効に変更 / `workbench.welcomePage.extraAnnouncements` off by default (`patches/shiraki/08`) |
 | テレメトリと実験機能 / Telemetry and experiments | 無効（VSCodium の設定を引き継ぎ） / Disabled (inherited from VSCodium) |
 | 音声入力の接続先、Microsoft のヘルプ用リンク / Voice endpoint, Microsoft help links | `product.json` で空にした / Emptied in `product.json` |
 | 自動更新 / Automatic updates | 配布の仕組みができるまで無効 / Disabled until Shiraki has its own update feed |
