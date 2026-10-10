@@ -134,7 +134,8 @@ jsonTmp=$( jq 'del(.trustedExtensionAuthAccess)' product.json )
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
 # Shiraki: bundle the Japanese language pack (Open VSX) as a built-in extension,
-# with the vscode-loc MIT license added to it
+# with "VS Code" in its translations replaced by the product name and the
+# vscode-loc MIT license added to it
 SHIRAKI_LP_NAME="MS-CEINTL.vscode-language-pack-ja"
 SHIRAKI_LP_VERSION="1.131.0"
 SHIRAKI_LP_SHA256="fae5a90170d48121bd8fe246d7d8ecbdab5bf88f21a0d58c94a3cc3af8c0f601"
@@ -159,7 +160,7 @@ if [[ "$( shiraki_sha256 "${SHIRAKI_LP_ORIG}" )" != "${SHIRAKI_LP_SHA256}" ]]; t
 fi
 
 rm -f "${SHIRAKI_LP_VSIX}"
-python3 -I ../build/shiraki/add_file_to_vsix.py "${SHIRAKI_LP_ORIG}" "${SHIRAKI_LP_VSIX}" ../build/shiraki/vscode-loc-LICENSE.md extension/LICENSE.md
+python3 -I ../build/shiraki/build_language_pack.py "${SHIRAKI_LP_ORIG}" "${SHIRAKI_LP_VSIX}" "${APP_NAME:?APP_NAME is not set}" ../build/shiraki/language-pack-keep-vscode.json ../build/shiraki/vscode-loc-LICENSE.md
 
 jsonTmp=$( jq --arg name "${SHIRAKI_LP_NAME}" --arg version "${SHIRAKI_LP_VERSION}" --arg vsix "${SHIRAKI_LP_VSIX}" --arg sha256 "$( shiraki_sha256 "${SHIRAKI_LP_VSIX}" )" \
   '.builtInExtensions += [{
@@ -338,6 +339,8 @@ if [[ "${OS_NAME}" == "linux" ]]; then
   sed -i 's|Visual Studio Code|Shiraki|g' resources/linux/debian/control.template
   sed -i 's|https://code.visualstudio.com/docs/setup/linux|https://github.com/moriyama-dev/shiraki|' resources/linux/debian/control.template
   sed -i 's|https://code.visualstudio.com|https://github.com/moriyama-dev/shiraki|' resources/linux/debian/control.template
+  # recommend CJK fonts so that the Japanese UI is rendered on systems without them
+  sed -i 's|^Recommends: @@RECOMMENDS@@$|Recommends: @@RECOMMENDS@@, fonts-noto-cjk|' resources/linux/debian/control.template
   # replace the upstream description (it is the last field of the template)
   sed -i '/^Description:/,$d' resources/linux/debian/control.template
   cat >> resources/linux/debian/control.template <<'EOF'

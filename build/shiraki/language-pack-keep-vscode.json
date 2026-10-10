@@ -1,0 +1,26 @@
+{
+  "//": "Translations of the Japanese language pack that keep \"VS Code\" because they refer to VS Code compatibility, the VS Code extension ecosystem or external services, not to the product itself.",
+  "keep": [
+    { "file": "ms-vscode.js-debug.i18n.json", "module": "package", "key": "configuration.autoAttachSmartPatterns", "reason": "links to the VS Code documentation" },
+    { "file": "ms-vscode.js-debug.i18n.json", "module": "package", "key": "extensionHost.label", "reason": "VS Code extension development" },
+    { "file": "ms-vscode.js-debug.i18n.json", "module": "package", "key": "extensionHost.snippet.launch.description", "reason": "VS Code extension development" },
+    { "file": "ms-vscode.js-debug.i18n.json", "module": "package", "key": "extensionHost.snippet.launch.label", "reason": "VS Code extension development" },
+    { "file": "vscode.extension-editing.i18n.json", "module": "bundle", "key": "This proposal cannot be used because for this extension the product defines a fixed set of API proposals. You can test your extension but before publishing you MUST reach out to the VS Code team.", "reason": "the VS Code team at Microsoft" },
+    { "file": "main.i18n.json", "module": "vs/platform/extensionManagement/node/extensionManagementService", "key": "incompatible", "reason": "compatibility with the VS Code API version" },
+    { "file": "main.i18n.json", "module": "vs/workbench/browser/actions/helpActions", "key": "newsletterSignup", "reason": "external service (VS Code newsletter)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/electron-browser/desktop.contribution", "key": "argv.useInMemorySecretStorage", "reason": "VS Code extension tests" },
+    { "file": "main.i18n.json", "module": "vs/workbench/contrib/chat/common/promptSyntax/languageProviders/promptValidator", "key": "promptValidator.unknownAttribute.rules", "reason": "name of a file format (VS Code agent rules)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/contrib/chat/common/promptSyntax/languageProviders/promptValidator", "key": "promptValidator.unknownAttribute.skill", "reason": "name of a file format (VS Code agent)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/contrib/chat/common/promptSyntax/languageProviders/promptValidator", "key": "promptValidator.unknownAttribute.vscode-agent", "reason": "name of a file format (VS Code agent files)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/contrib/terminalContrib/voice/browser/terminalVoiceActions", "key": "terminal.voice.installSpeechExtension", "reason": "name of an external extension (VS Code Speech)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.activationEvents", "reason": "extension manifest schema (VS Code extension format)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.categories", "reason": "VS Code gallery (marketplace)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.contributes", "reason": "extension manifest schema (VS Code extension format)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.displayName", "reason": "VS Code gallery (marketplace)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.engines.vscode", "reason": "compatibility with the VS Code API version" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.galleryBanner", "reason": "VS Code Marketplace" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.galleryBanner.color", "reason": "VS Code Marketplace" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.publisher", "reason": "extension manifest schema (VS Code extension format)" },
+    { "file": "main.i18n.json", "module": "vs/workbench/services/extensions/common/extensionsRegistry", "key": "vscode.extension.scripts.prepublish", "reason": "publishing a VS Code extension" }
+  ]
+}

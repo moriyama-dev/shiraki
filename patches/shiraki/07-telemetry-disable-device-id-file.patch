@@ -1,0 +1,27 @@
+--- a/src/vs/base/node/id.ts
++++ b/src/vs/base/node/id.ts
+@@ -117,12 +117,17 @@
+ }
+ 
+ export async function getDevDeviceId(errorLogger: (error: Error) => void): Promise<string> {
+-	try {
+-		const deviceIdPackage = await import('@vscode/deviceid');
+-		const id = await deviceIdPackage.getDeviceId();
+-		return stripUTF8BOM(id);
+-	} catch (err) {
+-		errorLogger(err);
+-		return uuid.generateUuid();
++	// Shiraki: do not create the shared device id file (~/.cache/Microsoft/DeveloperTools/deviceid),
++	// the id is only used for telemetry, experiments and Copilot
++	const useSharedDeviceId = false;
++	if (useSharedDeviceId) {
++		try {
++			const deviceIdPackage = await import('@vscode/deviceid');
++			const id = await deviceIdPackage.getDeviceId();
++			return stripUTF8BOM(id);
++		} catch (err) {
++			errorLogger(err);
++		}
+ 	}
++	return uuid.generateUuid();
+ }

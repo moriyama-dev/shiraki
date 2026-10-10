@@ -7,6 +7,14 @@ Shiraki は、MIT ライセンスで公開されている Code - OSS のソー�
 - 日本語 UI を標準にする予定です
 - 現在は Linux（x64）版のみを対象に開発中です
 
+## 使い方 / Usage
+
+### 表示言語 / Display language
+
+初めて起動したときだけ英語で表示されます。もう一度起動すると日本語になります。
+
+The user interface is shown in English only on the very first launch. It switches to Japanese from the next launch.
+
 ## ビルド
 
 ビルドの仕組みは VSCodium のものを引き継いでいます。必要なパッケージと手順は [docs/howto-build.md](docs/howto-build.md) を参照してください。開発用のビルドは次のコマンドで行います。
