@@ -1,0 +1,47 @@
+{
+  "name": "shiraki-defaults",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "1.0.0",
+  "publisher": "vscode",
+  "license": "MIT",
+  "engines": {
+    "vscode": "*"
+  },
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "configurationDefaults": {
+      "extensions.ignoreRecommendations": true,
+      "workbench.startupEditor": "none",
+      "editor.minimap.enabled": false,
+      "chat.agentsControl.enabled": "hidden",
+      "breadcrumbs.enabled": false,
+      "git.autofetch": false,
+      "npm.autoDetect": "off",
+      "files.watcherExclude": {
+        "**/node_modules/**": true,
+        "**/vendor/**": true,
+        "**/wp-content/uploads/**": true,
+        "**/wp-content/cache/**": true,
+        "**/dist/**": true,
+        "**/build/**": true,
+        "**/.next/**": true
+      },
+      "search.exclude": {
+        "**/node_modules": true,
+        "**/vendor": true,
+        "**/wp-content/uploads": true,
+        "**/wp-content/cache": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/.next": true
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moriyama-dev/shiraki.git"
+  }
+}

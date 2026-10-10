@@ -1,55 +1,6 @@
 {
-  "extensionAllowedBadgeProviders": [
-    "api.bintray.com",
-    "api.travis-ci.com",
-    "api.travis-ci.org",
-    "app.fossa.io",
-    "badge.buildkite.com",
-    "badge.fury.io",
-    "badge.waffle.io",
-    "badgen.net",
-    "badges.frapsoft.com",
-    "badges.gitter.im",
-    "badges.greenkeeper.io",
-    "cdn.travis-ci.com",
-    "cdn.travis-ci.org",
-    "ci.appveyor.com",
-    "circleci.com",
-    "cla.opensource.microsoft.com",
-    "codacy.com",
-    "codeclimate.com",
-    "codecov.io",
-    "coveralls.io",
-    "david-dm.org",
-    "deepscan.io",
-    "dev.azure.com",
-    "docs.rs",
-    "flat.badgen.net",
-    "gemnasium.com",
-    "githost.io",
-    "gitlab.com",
-    "godoc.org",
-    "goreportcard.com",
-    "img.shields.io",
-    "isitmaintained.com",
-    "marketplace.visualstudio.com",
-    "nodesecurity.io",
-    "opencollective.com",
-    "snyk.io",
-    "travis-ci.com",
-    "travis-ci.org",
-    "visualstudio.com",
-    "vsmarketplacebadge.apphb.com",
-    "www.bithound.io",
-    "www.versioneye.com"
-  ],
-  "extensionAllowedBadgeProvidersRegex": [
-    "^https:\\/\\/github\\.com\\/[^/]+\\/[^/]+\\/(actions\\/)?workflows\\/.*badge\\.svg"
-  ],
   "extensionsEnabledWithApiProposalVersion": [
-    "GitHub.copilot-chat",
     "ms-vscode.vscode-commander",
-    "ms-vscode.vscode-copilot-vision",
     "GitHub.vscode-pull-request-github"
   ],
   "extensionEnabledApiProposals": {
@@ -660,5 +611,51 @@
   "reportIssueUrl": "https://github.com/moriyama-dev/shiraki/issues/new",
   "licenseUrl": "https://github.com/moriyama-dev/shiraki/blob/main/LICENSE",
   "darwinBundleIdentifier": "dev.moriyama.shiraki",
-  "sharedDataFolderName": ".shiraki-shared"
+  "sharedDataFolderName": ".shiraki-shared",
+  "documentationUrl": "https://github.com/moriyama-dev/shiraki#readme",
+  "requestFeatureUrl": "https://github.com/moriyama-dev/shiraki/issues",
+  "serverLicenseUrl": "https://github.com/moriyama-dev/shiraki/blob/main/LICENSE",
+  "keyboardShortcutsUrlLinux": "",
+  "keyboardShortcutsUrlMac": "",
+  "keyboardShortcutsUrlWin": "",
+  "introductoryVideosUrl": "",
+  "tipsAndTricksUrl": "",
+  "releaseNotesUrl": "",
+  "twitterUrl": "",
+  "checksumFailMoreInfoUrl": "",
+  "voiceWsUrl": "",
+  "defaultChatAgent": {
+    "documentationUrl": "",
+    "termsStatementUrl": "",
+    "privacyStatementUrl": "",
+    "skusDocumentationUrl": "",
+    "optimizeUsageDocumentationUrl": "",
+    "publicCodeMatchesUrl": "",
+    "managePlanUrl": "",
+    "upgradePlanUrl": "",
+    "signUpUrl": "",
+    "entitlementUrl": "",
+    "entitlementSignupLimitedUrl": "",
+    "tokenEntitlementUrl": "",
+    "mcpRegistryDataUrl": "",
+    "managedSettingsUrl": ""
+  },
+  "builtInExtensions": [
+    {
+      "name": "ms-vscode.js-debug",
+      "version": "1.117.0",
+      "sha256": "854eeb8a785b1f41ba2bd02d7ccd4fdbe10021b61473293973c7e96d036c7fb8",
+      "repo": "https://github.com/microsoft/vscode-js-debug",
+      "metadata": {
+        "id": "25629058-ddac-4e17-abba-74678e126c5d",
+        "publisherId": {
+          "publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
+          "publisherName": "ms-vscode",
+          "displayName": "Microsoft",
+          "flags": "verified"
+        },
+        "publisherDisplayName": "Microsoft"
+      }
+    }
+  ]
 }

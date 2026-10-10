@@ -129,6 +129,10 @@ setpath_json "product" "tunnelApplicationConfig" '{}'
 jsonTmp=$( jq -s '.[0] * .[1]' product.json ../product.json )
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
+# Shiraki: drop Copilot-only entries that the merge above cannot remove
+jsonTmp=$( jq 'del(.trustedExtensionAuthAccess)' product.json )
+echo "${jsonTmp}" > product.json && unset jsonTmp
+
 cat product.json
 # }}}
 
@@ -179,6 +183,13 @@ if [[ -d "../patches/${OS_NAME}/" ]]; then
 fi
 
 for file in ../patches/user/*.patch; do
+  if [[ -f "${file}" ]]; then
+    apply_patch "${file}"
+  fi
+done
+
+# Shiraki patches (kept apart from the VSCodium ones to ease upstream merges)
+for file in ../patches/shiraki/*.patch; do
   if [[ -f "${file}" ]]; then
     apply_patch "${file}"
   fi

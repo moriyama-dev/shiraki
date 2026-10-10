@@ -1,0 +1,67 @@
+--- a/build/lib/extensions.ts
++++ b/build/lib/extensions.ts
+@@ -321,6 +321,55 @@
+ 	'vscode-test-resolver',
+ 	'ms-vscode.node-debug',
+ 	'ms-vscode.node-debug2',
++	// Shiraki: built-in extensions that are not shipped
++	'prompt-basics',
++	'microsoft-authentication',
++	'tunnel-forwarding',
++	'ipynb',
++	'notebook-renderers',
++	'grunt',
++	'gulp',
++	'jake',
++	'extension-editing',
++	'terminal-suggest',
++	'markdown-math',
++	'bat',
++	'theme-abyss',
++	'theme-kimbie-dark',
++	'theme-monokai',
++	'theme-monokai-dimmed',
++	'theme-quietlight',
++	'theme-red',
++	'theme-solarized-dark',
++	'theme-solarized-light',
++	'theme-tomorrow-night-blue',
++	'theme-modern-icons',
++	'clojure',
++	'coffeescript',
++	'cpp',
++	'csharp',
++	'dart',
++	'fsharp',
++	'go',
++	'groovy',
++	'hlsl',
++	'java',
++	'julia',
++	'latex',
++	'lua',
++	'objective-c',
++	'perl',
++	'powershell',
++	'pug',
++	'r',
++	'razor',
++	'restructuredtext',
++	'ruby',
++	'rust',
++	'shaderlab',
++	'swift',
++	'vb',
++	'handlebars',
+ ];
+ 
+ const marketplaceWebExtensionsExclude = new Set([
+@@ -633,7 +682,7 @@
+ 	{ script: 'mermaid-markdown-features/esbuild.webview.mts', tsconfig: 'mermaid-markdown-features/preview-src/tsconfig.json' },
+ 	{ script: 'notebook-renderers/esbuild.notebook.mts', tsconfig: 'notebook-renderers/tsconfig.json' },
+ 	{ script: 'simple-browser/esbuild.webview.mts', tsconfig: 'simple-browser/preview-src/tsconfig.json' },
+-];
++].filter(({ script }) => excludedExtensions.indexOf(script.split('/')[0]) === -1); // Shiraki: skip media of excluded extensions
+ 
+ export function buildExtensionMedia(isWatch: boolean, outputRoot?: string): Promise<void> {
+ 	const esbuildTask = esbuildExtensions('esbuilding extension media', isWatch, esbuildMediaScripts.map(({ script }) => ({
