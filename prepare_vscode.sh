@@ -160,7 +160,7 @@ if [[ "$( shiraki_sha256 "${SHIRAKI_LP_ORIG}" )" != "${SHIRAKI_LP_SHA256}" ]]; t
 fi
 
 rm -f "${SHIRAKI_LP_VSIX}"
-python3 -I ../build/shiraki/build_language_pack.py "${SHIRAKI_LP_ORIG}" "${SHIRAKI_LP_VSIX}" "${APP_NAME:?APP_NAME is not set}" ../build/shiraki/language-pack-keep-vscode.json ../build/shiraki/vscode-loc-LICENSE.md
+python3 -I ../build/shiraki/build_language_pack.py "${SHIRAKI_LP_ORIG}" "${SHIRAKI_LP_VSIX}" "${APP_NAME:?APP_NAME is not set}" ../build/shiraki/language-pack-keep-vscode.json ../build/shiraki/language-pack-ja-LICENSE.md
 
 jsonTmp=$( jq --arg name "${SHIRAKI_LP_NAME}" --arg version "${SHIRAKI_LP_VERSION}" --arg vsix "${SHIRAKI_LP_VSIX}" --arg sha256 "$( shiraki_sha256 "${SHIRAKI_LP_VSIX}" )" \
   '.builtInExtensions += [{

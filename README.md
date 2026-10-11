@@ -17,6 +17,7 @@
 - 日本語の UI が標準です。
 - テレメトリと実験機能は無効です。Shiraki が行う通信と、止めた通信の一覧は [docs/network.md](docs/network.md) にあります。
 - 拡張機能のストアは [Open VSX](https://open-vsx.org/) です。
+- [Open Remote - SSH](https://github.com/jeanp413/open-remote-ssh) を同梱しています。リモート側のサーバーは、このリポジトリの Releases からダウンロードされます。
 - 起動時に Welcome やおすすめの通知などが出ないように、既定の設定を調整しています。
 
 ### 削ったもの・残したもの
@@ -33,13 +34,19 @@
 
 ### インストール
 
-現在は Linux x64 の .deb だけです。配布用の Releases は準備中なので、それまでは[自分でビルド](#自分でビルドする)した .deb を使ってください。
+現在は Linux x64 版だけです。[Releases](https://github.com/moriyama-dev/shiraki/releases) から .deb をダウンロードし、SHA-256 を確かめてからインストールしてください。`VERSION` には、Releases に載っているバージョンを入れてください。
 
 ```bash
-sudo apt install ./shiraki_<バージョン>_amd64.deb
+VERSION=1.135.06820
+curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb"
+curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb.sha256"
+sha256sum -c "shiraki_${VERSION}_amd64.deb.sha256"
+sudo apt install "./shiraki_${VERSION}_amd64.deb"
 ```
 
-日本語フォントがない環境では、推奨パッケージとして `fonts-noto-cjk` も一緒に入ります。
+- 日本語フォントがない環境では、推奨パッケージとして `fonts-noto-cjk` も一緒に入ります。
+- 自動更新は準備中です。新しい版は、同じ手順で入れ直してください。
+- 展開してそのまま使える tar.gz 版もあります。
 
 ### 使い方の注意
 
@@ -85,6 +92,7 @@ The build system is based on [VSCodium](https://github.com/VSCodium/vscodium).
 - The user interface is in Japanese by default.
 - Telemetry and experiments are disabled. The network requests Shiraki makes, and the ones it no longer makes, are listed in [docs/network.md](docs/network.md).
 - Extensions come from [Open VSX](https://open-vsx.org/).
+- [Open Remote - SSH](https://github.com/jeanp413/open-remote-ssh) is bundled. The remote server is downloaded from the Releases of this repository.
 - The default settings are adjusted so that no Welcome page or recommendation notifications appear at startup.
 
 ### What was removed and what was kept
@@ -101,13 +109,19 @@ The full lists and the default settings are in [docs/removed-and-kept.md](docs/r
 
 ### Installation
 
-Only a Linux x64 .deb is available for now. Releases are being prepared; until then, use a .deb you [build yourself](#building-it-yourself).
+Only Linux x64 is available for now. Download the .deb from [Releases](https://github.com/moriyama-dev/shiraki/releases), check its SHA-256 and install it. Set `VERSION` to a version listed in Releases.
 
 ```bash
-sudo apt install ./shiraki_<version>_amd64.deb
+VERSION=1.135.06820
+curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb"
+curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb.sha256"
+sha256sum -c "shiraki_${VERSION}_amd64.deb.sha256"
+sudo apt install "./shiraki_${VERSION}_amd64.deb"
 ```
 
-On systems without Japanese fonts, `fonts-noto-cjk` is installed as a recommended package.
+- On systems without Japanese fonts, `fonts-noto-cjk` is installed as a recommended package.
+- Automatic updates are being prepared. Install newer versions again with the same steps.
+- A tar.gz archive that can be used after extracting is also available.
 
 ### Notes on use
 
