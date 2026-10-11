@@ -13,7 +13,7 @@
 ### 特徴
 
 - AI は Claude Code 拡張機能だけを使う前提です。組み込みのチャットや Copilot 関連の機能は表示されません。
-- 組み込み拡張機能を約半分（94 個から 46 個）に減らしました。
+- 組み込み拡張機能を約半分（94 個から 47 個）に減らしました。
 - 日本語の UI が標準です。
 - テレメトリと実験機能は無効です。Shiraki が行う通信と、止めた通信の一覧は [docs/network.md](docs/network.md) にあります。
 - 拡張機能のストアは [Open VSX](https://open-vsx.org/) です。
@@ -81,7 +81,7 @@ The build system is based on [VSCodium](https://github.com/VSCodium/vscodium).
 ### Features
 
 - The only AI it is meant to be used with is the Claude Code extension. The built-in chat and Copilot related features are hidden.
-- About half of the built-in extensions were removed (from 94 to 46).
+- About half of the built-in extensions were removed (from 94 to 47).
 - The user interface is in Japanese by default.
 - Telemetry and experiments are disabled. The network requests Shiraki makes, and the ones it no longer makes, are listed in [docs/network.md](docs/network.md).
 - Extensions come from [Open VSX](https://open-vsx.org/).

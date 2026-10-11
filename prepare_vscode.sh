@@ -182,6 +182,40 @@ jsonTmp=$( jq --arg name "${SHIRAKI_LP_NAME}" --arg version "${SHIRAKI_LP_VERSIO
   }]' product.json )
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
+# Shiraki: bundle Open Remote - SSH (Open VSX) as a built-in extension.
+# The .vsix already contains its MIT license (extension/LICENSE.txt).
+SHIRAKI_ORS_NAME="jeanp413.open-remote-ssh"
+SHIRAKI_ORS_VERSION="0.4.0"
+SHIRAKI_ORS_SHA256="4cf4d3720050eaf7e6299770593defa7c75ee2cd4c999c92e4aa6ce168b6634b"
+SHIRAKI_ORS_VSIX="${SHIRAKI_LP_DIR}/${SHIRAKI_ORS_NAME}-${SHIRAKI_ORS_VERSION}.vsix"
+
+curl -fsSL --retry 3 -o "${SHIRAKI_ORS_VSIX}" "https://open-vsx.org/api/jeanp413/open-remote-ssh/${SHIRAKI_ORS_VERSION}/file/${SHIRAKI_ORS_NAME}-${SHIRAKI_ORS_VERSION}.vsix"
+
+if [[ "$( shiraki_sha256 "${SHIRAKI_ORS_VSIX}" )" != "${SHIRAKI_ORS_SHA256}" ]]; then
+  echo "Checksum mismatch for ${SHIRAKI_ORS_VSIX}" >&2
+  exit 1
+fi
+
+jsonTmp=$( jq --arg name "${SHIRAKI_ORS_NAME}" --arg version "${SHIRAKI_ORS_VERSION}" --arg vsix "${SHIRAKI_ORS_VSIX}" --arg sha256 "${SHIRAKI_ORS_SHA256}" \
+  '.builtInExtensions += [{
+    "name": $name,
+    "version": $version,
+    "sha256": $sha256,
+    "repo": "https://github.com/jeanp413/open-remote-ssh",
+    "vsix": $vsix,
+    "metadata": {
+      "id": "9fc16cea-08e2-4ae5-bf75-224004d722ff",
+      "publisherId": {
+        "publisherId": "82e59b79-acc5-4a5b-81cb-9303cbdc05cb",
+        "publisherName": "jeanp413",
+        "displayName": "jeanp413",
+        "flags": ""
+      },
+      "publisherDisplayName": "jeanp413"
+    }
+  }]' product.json )
+echo "${jsonTmp}" > product.json && unset jsonTmp
+
 cat product.json
 # }}}
 

@@ -1,0 +1,120 @@
+name: Release (Linux x64)
+
+on:
+  push:
+    tags:
+      # Version tags such as 1.135.06820 (no "v" prefix)
+      - '[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version such as 1.135.06820 (empty: computed from the current time)'
+        required: false
+        default: ''
+      prerelease:
+        description: 'Mark the release as a pre-release'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Free disk space
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential pkg-config libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev fakeroot dpkg jq
+
+      - name: Determine the version
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ "${REF_TYPE}" == "tag" ]]; then
+            VERSION="${REF_NAME}"
+          elif [[ -n "${INPUT_VERSION}" ]]; then
+            VERSION="${INPUT_VERSION}"
+          else
+            MS_TAG=$( jq -r '.tag' upstream/stable.json )
+            VERSION="${MS_TAG}$( printf '%04d' $(( $(date -u +%-j) * 24 + $(date -u +%-H) )) )"
+          fi
+
+          if [[ ! "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-5][0-9]+$ ]]; then
+            echo "Invalid version: ${VERSION}" >&2
+            exit 1
+          fi
+
+          echo "RELEASE_VERSION=${VERSION}" >> "${GITHUB_ENV}"
+          echo "Release version: ${VERSION}"
+
+      - name: Build
+        env:
+          SHOULD_BUILD_RPM: 'no'
+          SHOULD_BUILD_SNAP: 'no'
+          SHOULD_BUILD_REH_WEB: 'no'
+          SHOULD_BUILD_TAR: 'yes'
+          SHOULD_BUILD_REH: 'yes'
+        run: ./dev/build.sh -p
+
+      - name: Collect release files
+        run: |
+          rm -f assets/*.sha1
+          ls -la assets
+          cd assets
+          for f in *; do
+            [[ "${f}" == *.sha256 ]] && continue
+            [[ -f "${f}.sha256" ]] || { echo "Missing ${f}.sha256" >&2; exit 1; }
+          done
+          sha256sum -c ./*.sha256
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PRERELEASE: ${{ github.event_name == 'push' || github.event.inputs.prerelease == 'true' }}
+        run: |
+          NOTES=".github/release-notes/${RELEASE_VERSION}.md"
+          if [[ ! -f "${NOTES}" ]]; then
+            NOTES="$( mktemp )"
+            printf 'Shiraki %s (Linux x64)\n' "${RELEASE_VERSION}" > "${NOTES}"
+          fi
+
+          FLAGS=()
+          if [[ "${PRERELEASE}" == "true" ]]; then
+            FLAGS+=(--prerelease)
+          fi
+
+          if gh release view "${RELEASE_VERSION}" > /dev/null 2>&1; then
+            gh release upload "${RELEASE_VERSION}" assets/* --clobber
+          else
+            gh release create "${RELEASE_VERSION}" assets/* \
+              --title "Shiraki ${RELEASE_VERSION}" \
+              --notes-file "${NOTES}" \
+              --target "${GITHUB_SHA}" \
+              "${FLAGS[@]}"
+          fi

@@ -1,8 +1,8 @@
 # 削ったもの・残したもの / What was removed and what was kept
 
-VS Code 1.135 をもとにした Linux x64 版の内容です。VSCodium が 94 個同梱している組み込み拡張機能のうち 50 個を削り、2 個を加えて、46 個にしました。
+VS Code 1.135 をもとにした Linux x64 版の内容です。VSCodium が 94 個同梱している組み込み拡張機能のうち 50 個を削り、3 個を加えて、47 個にしました。
 
-This describes the Linux x64 build based on VS Code 1.135. Of the 94 built-in extensions shipped by VSCodium, 50 were removed and 2 were added, leaving 46.
+This describes the Linux x64 build based on VS Code 1.135. Of the 94 built-in extensions shipped by VSCodium, 50 were removed and 3 were added, leaving 47.
 
 ## 削った組み込み拡張機能 / Removed built-in extensions
 
@@ -31,7 +31,7 @@ Removed languages are no longer highlighted inside Markdown code blocks either. 
 | Git / GitHub | `git`, `git-base`, `merge-conflict`, `github`, `github-authentication` |
 | ファイル形式 / File formats | `json`, `json-language-features`, `xml`, `yaml`, `ini`, `dotenv`, `shellscript`, `sql`, `log`, `diff`, `docker`, `make`, `python` |
 | エディター / Editor | `configuration-editing`, `search-result`, `references-view`, `media-preview`, `simple-browser`, `theme-defaults`, `theme-seti` |
-| Shiraki で追加 / Added by Shiraki | `MS-CEINTL.vscode-language-pack-ja`（日本語言語パック / Japanese language pack）, `shiraki-defaults`（既定の設定と Claude Code の案内 / default settings and the Claude Code guide） |
+| Shiraki で追加 / Added by Shiraki | `MS-CEINTL.vscode-language-pack-ja`（日本語言語パック / Japanese language pack）, `shiraki-defaults`（既定の設定と Claude Code の案内 / default settings and the Claude Code guide）, `jeanp413.open-remote-ssh`（Open Remote - SSH） |
 
 ## 止めた機能 / Disabled features
 
