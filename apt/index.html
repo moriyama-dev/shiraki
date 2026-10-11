@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shiraki APT repository</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 46rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.7; color: #222; background: #fbf8f2; }
+  pre { background: #fff; border: 1px solid #ddd3c0; padding: 0.8rem; overflow-x: auto; }
+  code { font-size: 0.9em; }
+  h1 { font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>Shiraki APT repository</h1>
+
+<p>Shiraki の apt リポジトリです。Linux x64（amd64）向けです。<br>
+This is the apt repository of Shiraki for Linux x64 (amd64).</p>
+
+<h2>使い方 / Usage</h2>
+<pre><code>sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://moriyama-dev.github.io/shiraki/shiraki-archive-keyring.gpg | sudo tee /etc/apt/keyrings/shiraki-archive-keyring.gpg &gt; /dev/null
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/shiraki-archive-keyring.gpg] https://moriyama-dev.github.io/shiraki stable main" | sudo tee /etc/apt/sources.list.d/shiraki.list &gt; /dev/null
+sudo apt update
+sudo apt install shiraki</code></pre>
+
+<p>署名鍵のフィンガープリント / Signing key fingerprint:<br>
+<code>D648 58EA 80CC 1812 77C8  9914 1F81 5671 A965 0E64</code></p>
+
+<p><a href="https://github.com/moriyama-dev/shiraki">github.com/moriyama-dev/shiraki</a></p>
+</body>
+</html>
