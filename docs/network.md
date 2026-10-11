@@ -6,7 +6,7 @@
 
 ### 調べ方
 
-Shiraki 1.135.06816（Linux x64）を、設定のない新しいユーザーの状態で起動し、Chromium の通信記録（`--log-net-log`）で通信先を調べました（2026 年 10 月）。記録した場面は次のとおりです。
+Shiraki 1.135.06820（Linux x64）を、設定のない新しいユーザーの状態で起動し、Chromium の通信記録（`--log-net-log`）で通信先を調べました（2026 年 10 月）。記録した場面は次のとおりです。
 
 - 初回起動
 - 2 回目の起動
@@ -14,6 +14,7 @@ Shiraki 1.135.06816（Linux x64）を、設定のない新しいユーザーの�
 - 拡張機能ビューを開く
 - Open VSX から入れた拡張機能がある状態での起動
 - 拡張機能のインストール
+- Open Remote - SSH での接続
 
 この記録で分かるのは、Shiraki 本体（メインプロセス、画面、共有プロセス）の通信です。拡張機能ホストや言語サーバーが Node.js で直接行う通信は記録に含まれません。同梱の拡張機能のそうした通信は、ソースコードから調べて[別の表](#同梱の拡張機能が行う通信)にまとめています。あとから入れた拡張機能（Claude Code など）の通信は、それぞれの拡張機能によります。
 
@@ -27,6 +28,15 @@ Shiraki 1.135.06816（Linux x64）を、設定のない新しいユーザーの�
 | `open-vsx.org`、`openvsx.eclipsecontent.org` | 拡張機能をダウンロードしてインストール、更新する | 拡張機能をインストールしたときと、更新を自動で入れるとき | 自動の更新は `"extensions.autoUpdate": "off"` で止められます |
 
 Welcome を開いても、ここに挙げたもの以外の通信は発生しません。
+
+### Open Remote - SSH で接続したときの通信
+
+| 通信先 | 目的 | いつ発生するか | 止める方法 |
+|---|---|---|---|
+| `github.com/moriyama-dev/shiraki/releases/download/...`（`release-assets.githubusercontent.com` へ転送） | 接続先のマシンに、Shiraki のリモート用サーバー（REH）をダウンロードする | 接続先にまだその版のサーバーがないとき。版ごとに 1 回で、ダウンロードするのは接続先のマシンです | 接続しなければ発生しません。`remote.SSH.serverDownloadUrlTemplate` で取得元を変えられます |
+| `raw.githubusercontent.com/EclipseFdn/publish-extensions/.../extension-control/extensions.json` | リモート用サーバーが、拡張機能の制御リストを取得する | 接続先でサーバーが起動したとき。通信するのは接続先のマシンです | 本体と同じく、設定では止められません |
+
+接続している間、手元の Shiraki と接続先のあいだの通信は SSH のトンネルを通ります。
 
 ### 同梱の拡張機能が行う通信
 
@@ -63,7 +73,7 @@ Welcome を開いても、ここに挙げたもの以外の通信は発生しま
 
 ### How this was measured
 
-Shiraki 1.135.06816 (Linux x64) was started as a new user with no settings, and its network activity was recorded with the Chromium network log (`--log-net-log`) in October 2026. These situations were recorded:
+Shiraki 1.135.06820 (Linux x64) was started as a new user with no settings, and its network activity was recorded with the Chromium network log (`--log-net-log`) in October 2026. These situations were recorded:
 
 - First launch
 - Second launch
@@ -71,6 +81,7 @@ Shiraki 1.135.06816 (Linux x64) was started as a new user with no settings, and 
 - Opening the Extensions view
 - Launching with an extension installed from Open VSX
 - Installing an extension
+- Connecting with Open Remote - SSH
 
 The log covers the network activity of Shiraki itself (main process, windows and shared process). Requests made directly with Node.js by the extension host or language servers are not included. For the bundled extensions, those requests were checked in the source code and are listed in a [separate table](#requests-made-by-bundled-extensions). Extensions you install yourself (such as Claude Code) make their own requests.
 
@@ -84,6 +95,15 @@ The log covers the network activity of Shiraki itself (main process, windows and
 | `open-vsx.org`, `openvsx.eclipsecontent.org` | Download, install and update extensions | When installing an extension, and when updates are installed automatically | Automatic updates can be stopped with `"extensions.autoUpdate": "off"` |
 
 Opening the Welcome page causes no requests other than the ones above.
+
+### Requests when connecting with Open Remote - SSH
+
+| Destination | Purpose | When | How to stop it |
+|---|---|---|---|
+| `github.com/moriyama-dev/shiraki/releases/download/...` (redirected to `release-assets.githubusercontent.com`) | Download the Shiraki remote server (REH) to the remote machine | When the remote machine does not have the server for this version yet. Once per version, and the download is made by the remote machine | Does not happen without connecting. The source can be changed with `remote.SSH.serverDownloadUrlTemplate` |
+| `raw.githubusercontent.com/EclipseFdn/publish-extensions/.../extension-control/extensions.json` | The remote server downloads the extension control list | When the server starts on the remote machine. The request is made by the remote machine | Cannot be turned off in the settings, as in the editor itself |
+
+While connected, traffic between your Shiraki and the remote machine goes through the SSH tunnel.
 
 ### Requests made by bundled extensions
 
