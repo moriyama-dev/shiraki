@@ -45,7 +45,7 @@ Removed languages are no longer highlighted inside Markdown code blocks either. 
 | スペルチェック用の辞書のダウンロード（redirector.gvt1.com） / Spell checker dictionary download (redirector.gvt1.com) | スペルチェック機能を無効化 / Spell checker disabled (`patches/shiraki/09`) |
 | テレメトリと実験機能 / Telemetry and experiments | 無効（VSCodium の設定を引き継ぎ） / Disabled (inherited from VSCodium) |
 | 音声入力の接続先、Microsoft のヘルプ用リンク / Voice endpoint, Microsoft help links | `product.json` で空にした / Emptied in `product.json` |
-| 自動更新 / Automatic updates | 配布の仕組みができるまで無効 / Disabled until Shiraki has its own update feed |
+| エディタ内の自動更新 / In-editor automatic updates | 無効。更新は apt で行う / Disabled. Updates are installed with apt |
 
 ## 既定の設定 / Default settings
 

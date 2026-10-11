@@ -38,6 +38,10 @@ Welcome を開いても、ここに挙げたもの以外の通信は発生しま
 
 接続している間、手元の Shiraki と接続先のあいだの通信は SSH のトンネルを通ります。
 
+### apt での更新
+
+apt リポジトリを登録した場合、`sudo apt update` を実行したときに、システムの apt が `moriyama-dev.github.io/shiraki`（GitHub Pages）から署名つきのパッケージ一覧を取得し、`apt upgrade` や `apt install` のときに .deb をダウンロードします。これは Shiraki 本体ではなく apt が行う通信で、Shiraki を起動しただけでは発生しません。
+
 ### 同梱の拡張機能が行う通信
 
 ソースコードから確認したものです。どれもファイルを開いたときや編集したときに発生し、起動しただけでは発生しません。
@@ -56,7 +60,7 @@ Welcome を開いても、ここに挙げたもの以外の通信は発生しま
 |---|---|
 | テレメトリ（利用状況の送信） | 無効（VSCodium の設定を引き継ぎ） |
 | 実験機能（設定の配信） | 無効（VSCodium の設定を引き継ぎ） |
-| Shiraki 本体の自動更新 | 配布の仕組みができるまで無効 |
+| エディタ内の自動更新と更新の通知 | 無効。更新は apt で行います |
 | Welcome のお知らせの取得（`raw.githubusercontent.com/moriyama-dev/shiraki/...`） | 既定で無効（`patches/shiraki/08`） |
 | スペルチェック用の辞書のダウンロード（`redirector.gvt1.com`） | スペルチェック機能を無効にして、辞書を取得しないようにした（`patches/shiraki/09`） |
 | GitHub Copilot の利用資格や設定の取得（`api.github.com/copilot_internal/...` など） | `product.json` で URL を空にした |
@@ -105,6 +109,10 @@ Opening the Welcome page causes no requests other than the ones above.
 
 While connected, traffic between your Shiraki and the remote machine goes through the SSH tunnel.
 
+### Updates with apt
+
+If you added the apt repository, the system apt downloads the signed package lists from `moriyama-dev.github.io/shiraki` (GitHub Pages) when you run `sudo apt update`, and downloads the .deb on `apt upgrade` or `apt install`. These requests are made by apt, not by Shiraki, and do not happen when Shiraki starts.
+
 ### Requests made by bundled extensions
 
 These were checked in the source code. All of them happen when files are opened or edited, not at launch.
@@ -123,7 +131,7 @@ These were checked in the source code. All of them happen when files are opened 
 |---|---|
 | Telemetry (usage data) | Disabled (inherited from VSCodium) |
 | Experiments (remote settings) | Disabled (inherited from VSCodium) |
-| Automatic updates of Shiraki itself | Disabled until Shiraki has its own distribution |
+| In-editor automatic updates and update notifications | Disabled. Updates are installed with apt |
 | Welcome page announcements (`raw.githubusercontent.com/moriyama-dev/shiraki/...`) | Off by default (`patches/shiraki/08`) |
 | Spell checker dictionary download (`redirector.gvt1.com`) | The spell checker is disabled, so no dictionary is downloaded (`patches/shiraki/09`) |
 | GitHub Copilot entitlement and settings requests (`api.github.com/copilot_internal/...` and others) | URLs emptied in `product.json` |

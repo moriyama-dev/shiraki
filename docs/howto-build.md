@@ -67,6 +67,16 @@ CPU 8 コア、メモリ 16GiB の Ubuntu 24.04（仮想マシン）で測った
 
 パッチが VS Code の新しいバージョンに当たらなくなったときは、VSCodium と同じく `./dev/patch.sh <パッチ名>` で直せます。
 
+### リリースの手順（管理者向け）
+
+1. バージョンを決めます。`1.135.0` のような VS Code の版に、「年初からの日数 × 24 ＋ 時（UTC）」を 4 桁で続けた番号です（例: `1.135.06820`）。
+2. 必要なら `.github/release-notes/<バージョン>.md` にリリースノートを書きます。
+3. そのバージョンのタグを付けて push します（`git tag -a 1.135.06820 -m "Shiraki 1.135.06820" && git push origin 1.135.06820`）。
+4. `Release (Linux x64)` のワークフローが .deb、tar.gz、REH、CLI を作り、Releases に登録します（約 20 分）。
+5. 続けて `APT repository` のワークフローが、最新 2 つのリリースの .deb から apt リポジトリを作り、署名して GitHub Pages に公開します。
+
+apt リポジトリの署名には、リポジトリのシークレット `APT_SIGNING_KEY` を使います。対応する公開鍵は `apt/shiraki-archive-keyring.asc` です。
+
 ## English
 
 Only the Linux x64 build has been verified so far.
@@ -133,3 +143,13 @@ Measured on Ubuntu 24.04 (virtual machine) with 8 CPU cores and 16 GiB of memory
 | `prepare_vscode.sh` | Wires the above into the build |
 
 If a patch no longer applies to a new VS Code version, fix it with `./dev/patch.sh <patch name>`, as in VSCodium.
+
+### Release steps (maintainers)
+
+1. Choose the version: the VS Code version such as `1.135.0` followed by "day of the year × 24 + hour (UTC)" as 4 digits (for example `1.135.06820`).
+2. If needed, write release notes in `.github/release-notes/<version>.md`.
+3. Push a tag with that version (`git tag -a 1.135.06820 -m "Shiraki 1.135.06820" && git push origin 1.135.06820`).
+4. The `Release (Linux x64)` workflow builds the .deb, tar.gz, REH and CLI and publishes them to Releases (about 20 minutes).
+5. The `APT repository` workflow then builds the apt repository from the .deb files of the latest 2 releases, signs it and deploys it to GitHub Pages.
+
+The apt repository is signed with the `APT_SIGNING_KEY` repository secret. The matching public key is `apt/shiraki-archive-keyring.asc`.

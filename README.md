@@ -24,7 +24,7 @@
 
 - 削ったもの: AI 用のプロンプトの文法、Microsoft アカウント、トンネル、ノートブック、古いタスクランナー（Grunt、Gulp、Jake）、追加の配色テーマ、WordPress や Web 開発で使わない言語の文法など
 - 残したもの: PHP、JavaScript / TypeScript、HTML / CSS、Markdown（Mermaid の図を含む）、Git / GitHub、JSON、YAML、Docker など
-- 止めた機能: Agents ウィンドウ、GitHub Copilot の管理設定ファイルの監視、`~/.cache/Microsoft` への端末 ID の保存、自動更新（配布の仕組みができるまで）
+- 止めた機能: Agents ウィンドウ、GitHub Copilot の管理設定ファイルの監視、`~/.cache/Microsoft` への端末 ID の保存、エディタ内の自動更新（更新は apt で行います）
 
 全一覧と既定の設定は [docs/removed-and-kept.md](docs/removed-and-kept.md) にあります。
 
@@ -34,7 +34,21 @@
 
 ### インストール
 
-現在は Linux x64 版だけです。[Releases](https://github.com/moriyama-dev/shiraki/releases) から .deb をダウンロードし、SHA-256 を確かめてからインストールしてください。`VERSION` には、Releases に載っているバージョンを入れてください。
+現在は Linux x64 版だけです。apt リポジトリを登録して入れると、新しい版が出たときに `sudo apt update && sudo apt upgrade` で更新できます。
+
+```bash
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://moriyama-dev.github.io/shiraki/shiraki-archive-keyring.gpg | sudo tee /etc/apt/keyrings/shiraki-archive-keyring.gpg > /dev/null
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/shiraki-archive-keyring.gpg] https://moriyama-dev.github.io/shiraki stable main" | sudo tee /etc/apt/sources.list.d/shiraki.list > /dev/null
+sudo apt update
+sudo apt install shiraki
+```
+
+- apt リポジトリの署名鍵のフィンガープリントは `D648 58EA 80CC 1812 77C8  9914 1F81 5671 A965 0E64` です。
+- 日本語フォントがない環境では、推奨パッケージとして `fonts-noto-cjk` も一緒に入ります。
+- エディタの中に更新を知らせる機能はありません。更新は apt で行います。
+
+apt リポジトリを使わずに入れる場合は、[Releases](https://github.com/moriyama-dev/shiraki/releases) から .deb をダウンロードし、SHA-256 を確かめてからインストールしてください。展開してそのまま使える tar.gz 版もあります。
 
 ```bash
 VERSION=1.135.06820
@@ -43,10 +57,6 @@ curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/
 sha256sum -c "shiraki_${VERSION}_amd64.deb.sha256"
 sudo apt install "./shiraki_${VERSION}_amd64.deb"
 ```
-
-- 日本語フォントがない環境では、推奨パッケージとして `fonts-noto-cjk` も一緒に入ります。
-- 自動更新は準備中です。新しい版は、同じ手順で入れ直してください。
-- 展開してそのまま使える tar.gz 版もあります。
 
 ### 使い方の注意
 
@@ -99,7 +109,7 @@ The build system is based on [VSCodium](https://github.com/VSCodium/vscodium).
 
 - Removed: the AI prompt grammar, Microsoft accounts, tunnels, notebooks, legacy task runners (Grunt, Gulp, Jake), extra color themes, and grammars for languages not used for WordPress or web development
 - Kept: PHP, JavaScript / TypeScript, HTML / CSS, Markdown (including Mermaid diagrams), Git / GitHub, JSON, YAML, Docker and more
-- Disabled: the Agents window, watching the GitHub Copilot managed settings file, storing a device id in `~/.cache/Microsoft`, and automatic updates (until Shiraki has its own distribution)
+- Disabled: the Agents window, watching the GitHub Copilot managed settings file, storing a device id in `~/.cache/Microsoft`, and in-editor automatic updates (updates are installed with apt)
 
 The full lists and the default settings are in [docs/removed-and-kept.md](docs/removed-and-kept.md).
 
@@ -109,7 +119,21 @@ The full lists and the default settings are in [docs/removed-and-kept.md](docs/r
 
 ### Installation
 
-Only Linux x64 is available for now. Download the .deb from [Releases](https://github.com/moriyama-dev/shiraki/releases), check its SHA-256 and install it. Set `VERSION` to a version listed in Releases.
+Only Linux x64 is available for now. If you install it from the apt repository, newer versions can be installed with `sudo apt update && sudo apt upgrade`.
+
+```bash
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://moriyama-dev.github.io/shiraki/shiraki-archive-keyring.gpg | sudo tee /etc/apt/keyrings/shiraki-archive-keyring.gpg > /dev/null
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/shiraki-archive-keyring.gpg] https://moriyama-dev.github.io/shiraki stable main" | sudo tee /etc/apt/sources.list.d/shiraki.list > /dev/null
+sudo apt update
+sudo apt install shiraki
+```
+
+- The fingerprint of the apt repository signing key is `D648 58EA 80CC 1812 77C8  9914 1F81 5671 A965 0E64`.
+- On systems without Japanese fonts, `fonts-noto-cjk` is installed as a recommended package.
+- The editor does not notify you about updates. Updates are installed with apt.
+
+To install without the apt repository, download the .deb from [Releases](https://github.com/moriyama-dev/shiraki/releases), check its SHA-256 and install it. A tar.gz archive that can be used after extracting is also available.
 
 ```bash
 VERSION=1.135.06820
@@ -118,10 +142,6 @@ curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/
 sha256sum -c "shiraki_${VERSION}_amd64.deb.sha256"
 sudo apt install "./shiraki_${VERSION}_amd64.deb"
 ```
-
-- On systems without Japanese fonts, `fonts-noto-cjk` is installed as a recommended package.
-- Automatic updates are being prepared. Install newer versions again with the same steps.
-- A tar.gz archive that can be used after extracting is also available.
 
 ### Notes on use
 
