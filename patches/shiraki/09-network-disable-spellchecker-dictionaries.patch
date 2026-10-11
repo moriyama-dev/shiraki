@@ -1,0 +1,17 @@
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -166,6 +166,14 @@
+ 	app.commandLine.appendSwitch('lang', electronLocale);
+ }
+ 
++// Shiraki: the Chromium spell checker is not used. Disable it and clear its
++// languages on every session as soon as the session is created, so that no
++// dictionaries are downloaded from redirector.gvt1.com.
++app.on('session-created', session => {
++	session.setSpellCheckerEnabled(false);
++	session.setSpellCheckerLanguages([]);
++});
++
+ // Load our code once ready
+ app.once('ready', function () {
+ 	if (args['trace']) {
