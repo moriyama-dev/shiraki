@@ -1,0 +1,30 @@
+--- a/build/linux/debian/calculate-deps.ts
++++ b/build/linux/debian/calculate-deps.ts
+@@ -4,7 +4,7 @@
+  *--------------------------------------------------------------------------------------------*/
+ 
+ import { spawnSync } from 'child_process';
+-import { constants, statSync } from 'fs';
++import { constants, statSync, writeFileSync } from 'fs';
+ import { tmpdir } from 'os';
+ import path from 'path';
+ import manifests from '../../../cgmanifest.json' with { type: 'json' };
+@@ -35,9 +35,16 @@
+ 	});
+ 	const dpkgShlibdepsUrl = `https://raw.githubusercontent.com/chromium/chromium/${chromiumManifest[0].version}/third_party/dpkg-shlibdeps/dpkg-shlibdeps.pl`;
+ 	const dpkgShlibdepsScriptLocation = `${tmpdir()}/dpkg-shlibdeps.pl`;
+-	const result = spawnSync('curl', [dpkgShlibdepsUrl, '-o', dpkgShlibdepsScriptLocation]);
++	// Shiraki: fail on HTTP errors (a rate-limited response used to be saved as the script) and retry,
++	// then fall back to Chromium's own mirror, which serves the same file base64-encoded
++	let result = spawnSync('curl', ['-fsSL', '--retry', '3', '--retry-delay', '10', '--retry-all-errors', dpkgShlibdepsUrl, '-o', dpkgShlibdepsScriptLocation]);
+ 	if (result.status !== 0) {
+-		throw new Error('Cannot retrieve dpkg-shlibdeps. Stderr:\n' + result.stderr);
++		const mirrorUrl = `https://chromium.googlesource.com/chromium/src/+/${chromiumManifest[0].version}/third_party/dpkg-shlibdeps/dpkg-shlibdeps.pl?format=TEXT`;
++		result = spawnSync('curl', ['-fsSL', '--retry', '3', '--retry-delay', '10', '--retry-all-errors', mirrorUrl]);
++		if (result.status !== 0) {
++			throw new Error('Cannot retrieve dpkg-shlibdeps. Stderr:\n' + result.stderr);
++		}
++		writeFileSync(dpkgShlibdepsScriptLocation, Buffer.from(result.stdout.toString().trim(), 'base64'));
+ 	}
+ 	const cmd = [dpkgShlibdepsScriptLocation, '--ignore-weak-undefined', '--ignore-missing-info'];
+ 	switch (arch) {
