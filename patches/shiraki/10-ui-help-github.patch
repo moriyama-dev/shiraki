@@ -1,0 +1,51 @@
+--- a/src/vs/workbench/browser/actions/helpActions.ts
++++ b/src/vs/workbench/browser/actions/helpActions.ts
+@@ -154,6 +154,37 @@
+ 	}
+ }
+ 
++class OpenGitHubUrlAction extends Action2 {
++
++	static readonly ID = 'workbench.action.openGitHubUrl';
++	// Shiraki: the repository, next to "Report Issue", read from product.json "githubUrl"
++	static readonly URL = (product as { githubUrl?: string }).githubUrl;
++	static readonly AVAILABLE = !isWeb && !!OpenGitHubUrlAction.URL;
++
++	constructor() {
++		super({
++			id: OpenGitHubUrlAction.ID,
++			title: {
++				...localize2('openGitHubUrl', "GitHub"),
++				mnemonicTitle: localize({ key: 'miGitHub', comment: ['&& denotes a mnemonic'] }, "&&GitHub"),
++			},
++			category: Categories.Help,
++			f1: true,
++			menu: {
++				id: MenuId.MenubarHelpMenu,
++				group: '3_feedback',
++				order: 2
++			}
++		});
++	}
++
++	run(accessor: ServicesAccessor): void {
++		if (OpenGitHubUrlAction.URL) {
++			accessor.get(IOpenerService).open(URI.parse(OpenGitHubUrlAction.URL));
++		}
++	}
++}
++
+ class OpenNewsletterSignupUrlAction extends Action2 {
+ 
+ 	static readonly ID = 'workbench.action.openNewsletterSignupUrl';
+@@ -383,6 +414,10 @@
+ 	registerAction2(OpenDocumentationUrlAction);
+ }
+ 
++if (OpenGitHubUrlAction.AVAILABLE) {
++	registerAction2(OpenGitHubUrlAction);
++}
++
+ if (OpenNewsletterSignupUrlAction.AVAILABLE) {
+ 	registerAction2(OpenNewsletterSignupUrlAction);
+ }

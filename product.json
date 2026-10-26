@@ -609,6 +609,7 @@
   "serverDataFolderName": ".shiraki-server",
   "tunnelApplicationName": "shiraki-tunnel",
   "reportIssueUrl": "https://github.com/moriyama-dev/shiraki/issues/new",
+  "githubUrl": "https://github.com/moriyama-dev/shiraki",
   "licenseUrl": "https://github.com/moriyama-dev/shiraki/blob/main/LICENSE",
   "darwinBundleIdentifier": "dev.moriyama.shiraki",
   "sharedDataFolderName": ".shiraki-shared",
