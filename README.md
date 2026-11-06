@@ -51,7 +51,7 @@ sudo apt install shiraki
 apt リポジトリを使わずに入れる場合は、[Releases](https://github.com/moriyama-dev/shiraki/releases) から .deb をダウンロードし、SHA-256 を確かめてからインストールしてください。展開してそのまま使える tar.gz 版もあります。
 
 ```bash
-VERSION=1.135.06820
+VERSION=1.135.07192
 curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb"
 curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb.sha256"
 sha256sum -c "shiraki_${VERSION}_amd64.deb.sha256"
@@ -136,7 +136,7 @@ sudo apt install shiraki
 To install without the apt repository, download the .deb from [Releases](https://github.com/moriyama-dev/shiraki/releases), check its SHA-256 and install it. A tar.gz archive that can be used after extracting is also available.
 
 ```bash
-VERSION=1.135.06820
+VERSION=1.135.07192
 curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb"
 curl -fLO "https://github.com/moriyama-dev/shiraki/releases/download/${VERSION}/shiraki_${VERSION}_amd64.deb.sha256"
 sha256sum -c "shiraki_${VERSION}_amd64.deb.sha256"
